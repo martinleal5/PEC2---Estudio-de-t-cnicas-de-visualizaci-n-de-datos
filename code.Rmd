@@ -1,17 +1,10 @@
----
-title: "PEC2 - Estudio de técnicas de visualización de datos"
-author: "Martín Leal Martínez"
-date: "4/20/2022"
-output: html_document
----
-```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # setup
 library(tidyverse)
 library(vistime)
-```
-### TIMELINE
+library(utils)
 
-```{r, echo = FALSE}
+# TIMELINE
+
 # Creamos el conjunto de datos
 data <- read.csv(text="event,group,start,end,color
                        Etapa 1,Etapas,1939-01-01,1941-12-31,#DEEBF7
@@ -32,13 +25,9 @@ data <- read.csv(text="event,group,start,end,color
 
 # Representamos la línea temporal
 vistime(data, linewidth = 25, title = "Principales acontecimientos de la Segunda Guerra Mundial")
-```
-
-
 
 ### BOXPLOT
 
-```{r, echo=FALSE}
 # Utilizamos el conjunto mpg de R que contiene información acerca de distintos modelos de coches
 # Realizamos un boxplot a partir del consumo en autopista de las diferentes marcas
 ggplot(mpg, mapping = aes(x = manufacturer, y = hwy)) +
@@ -47,20 +36,12 @@ ggplot(mpg, mapping = aes(x = manufacturer, y = hwy)) +
   labs(y = "\nConsumo en autopista (L/100 km)",
        x = "Fabricante\n",
        title = "Distribución del consumo de combustible de los principales fabricantes.\n")
-```
 
 ### CONNECTED SCATTERPLOT
 
-```{r, echo=FALSE}
-#these libraries need to be loaded
-library(utils)
-
-#read the Dataset sheet into “R”. The dataset will be called "data".
+# Leemos el conjunto de datos
 data <- read.csv("https://opendata.ecdc.europa.eu/covid19/nationalcasedeath_eueea_daily_ei/csv", na.strings = "", fileEncoding = "UTF-8-BOM")
-```
 
-
-```{r, echo=FALSE}
 # Limpiamos el conjunto de datos
 data = data %>%
   filter(deaths >= 0) %>%
@@ -68,14 +49,9 @@ data = data %>%
   summarise(deaths = sum(deaths)) %>%
   mutate(dateRep = as.Date(dateRep, "%d/%m/%Y")) %>%
   arrange(dateRep)
-```
 
-```{r, echo=FALSE}
 # Creamos la visualización
-
 ggplot(data, aes(x = dateRep, y = deaths)) +
   geom_path() +
   labs(x = "\nFecha", y = "Fallecidos\n",
  title ="Evolución del número de fallecidos por COVID - 19.\n")
-```
-
